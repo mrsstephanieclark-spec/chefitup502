@@ -1,0 +1,13 @@
+{
+  "name": "chefitup",
+  "version": "1.0.0",
+  "description": "Chef It Up Redesign - Private Chef & Catering in Louisville, KY",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'No build step required for static HTML/CSS/JS site'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
