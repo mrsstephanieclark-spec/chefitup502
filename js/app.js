@@ -28,17 +28,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. HERO BACKGROUND CAROUSEL ---
-    const slides = document.querySelectorAll('.hero-slide');
-    let currentSlide = 0;
-    const slideInterval = 5000; // Switch slides every 5 seconds
+    // --- 2. HERO VIDEO PLAYBACK CONTROL (REDUCED MOTION) ---
+    const heroVideo = document.getElementById('hero-video');
+    if (heroVideo) {
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        
+        const handleMotionPreference = (e) => {
+            if (e.matches) {
+                heroVideo.removeAttribute('autoplay');
+                heroVideo.pause();
+            } else {
+                heroVideo.setAttribute('autoplay', '');
+                heroVideo.play().catch(err => {
+                    console.log('Autoplay was prevented, wait for interaction', err);
+                });
+            }
+        };
 
-    if (slides.length > 1) {
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-        }, slideInterval);
+        // Initial check
+        handleMotionPreference(motionQuery);
+
+        // Listen for changes
+        motionQuery.addEventListener('change', handleMotionPreference);
     }
 
     // --- 3. DYNAMIC SCROLL ACTIVE NAV LINK ---

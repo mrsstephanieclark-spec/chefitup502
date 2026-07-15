@@ -42,10 +42,12 @@
     <main>
         <!-- Hero Section -->
         <section id="hero" class="hero-section">
-            <div class="hero-bg-carousel">
-                <div class="hero-slide active" style="background-image: linear-gradient(rgba(35, 31, 29, 0.5), rgba(35, 31, 29, 0.7)), url('assets/hero-plated.jpg');"></div>
-                <div class="hero-slide" style="background-image: linear-gradient(rgba(35, 31, 29, 0.5), rgba(35, 31, 29, 0.7)), url('assets/plated-steak.jpg');"></div>
-                <div class="hero-slide" style="background-image: linear-gradient(rgba(35, 31, 29, 0.5), rgba(35, 31, 29, 0.7)), url('assets/brunch-spread.jpg');"></div>
+            <div class="hero-video-container">
+                <video autoplay muted loop playsinline poster="assets/hero-plated.jpg" id="hero-video">
+                    <source src="assets/hero-video.mp4" type="video/mp4">
+                    <source src="assets/hero movie.mov" type="video/quicktime">
+                    Your browser does not support the video tag.
+                </video>
             </div>
             
             <div class="hero-content text-center">
