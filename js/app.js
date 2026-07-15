@@ -214,4 +214,30 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // --- 6. LIGHTBOX FUNCTIONALITY ---
+    const lightboxModal = document.getElementById('site-lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    window.openLightbox = (src) => {
+        if (lightboxModal && lightboxImg) {
+            lightboxImg.src = src;
+            lightboxModal.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+        }
+    };
+
+    window.closeLightbox = () => {
+        if (lightboxModal) {
+            lightboxModal.classList.remove('open');
+            document.body.style.overflow = 'auto'; // Restore background scrolling
+        }
+    };
+
+    // Close on Escape key press
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            window.closeLightbox();
+        }
+    });
 });
