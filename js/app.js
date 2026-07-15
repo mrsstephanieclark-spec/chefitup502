@@ -63,6 +63,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Listen for changes in accessibility settings
         motionQuery.addEventListener('change', handleMotionPreference);
+
+        // Defensive nudge play on canplay event
+        heroVideo.addEventListener('canplay', () => {
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                try {
+                    const playPromise = heroVideo.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(err => {
+                            console.warn('Defensive play nudge prevented by browser:', err);
+                        });
+                    }
+                } catch (err) {
+                    console.error('Defensive play nudge failed with error:', err);
+                }
+            }
+        });
+
+        // Debugging error handler for video loading issues
+        heroVideo.addEventListener('error', () => {
+            const error = heroVideo.error;
+            if (error) {
+                console.error(`Hero video MediaError [Code ${error.code}]: ${error.message || 'No additional message details'}`);
+            } else {
+                console.error('An unknown error occurred on the hero video element.');
+            }
+        });
     }
 
     // --- 3. DYNAMIC SCROLL ACTIVE NAV LINK ---
