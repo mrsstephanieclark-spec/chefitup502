@@ -376,7 +376,7 @@ button, input, select, textarea {
         display: none;
     }
     .hero-video-container {
-        background-image: linear-gradient(rgba(35, 31, 29, 0.5), rgba(35, 31, 29, 0.7)), url('../assets/hero-plated.jpg');
+        background-image: linear-gradient(rgba(35, 31, 29, 0.5), rgba(35, 31, 29, 0.7)), url('../assets/8.png.jpeg');
         background-size: cover;
         background-position: center;
     }
