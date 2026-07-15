@@ -31,24 +31,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 2. HERO VIDEO PLAYBACK CONTROL (REDUCED MOTION) ---
     const heroVideo = document.getElementById('hero-video');
     if (heroVideo) {
+        // Force muted programmatically to guarantee Safari recognizes the video is muted
+        heroVideo.muted = true;
+
         const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         
         const handleMotionPreference = (e) => {
             if (e.matches) {
-                heroVideo.removeAttribute('autoplay');
                 heroVideo.pause();
             } else {
-                heroVideo.setAttribute('autoplay', '');
-                heroVideo.play().catch(err => {
-                    console.log('Autoplay was prevented, wait for interaction', err);
-                });
+                // If motion is enabled and it is currently paused, try playing
+                if (heroVideo.paused) {
+                    heroVideo.play().catch(err => {
+                        console.log('Autoplay was prevented by browser security:', err);
+                    });
+                }
             }
         };
 
-        // Initial check
-        handleMotionPreference(motionQuery);
+        // Pause initially only if prefers-reduced-motion is active.
+        // Otherwise, let the native HTML 'autoplay' attribute start the video.
+        if (motionQuery.matches) {
+            heroVideo.pause();
+        } else {
+            // Optional: try a safe play() call in case browser native autoplay didn't start it.
+            // Some browsers require a user gesture or trigger.
+            heroVideo.play().catch(() => {
+                // Native browser autoplay policy will catch this if blocked, showing the poster.
+            });
+        }
 
-        // Listen for changes
+        // Listen for changes in accessibility settings
         motionQuery.addEventListener('change', handleMotionPreference);
     }
 
