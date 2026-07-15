@@ -1414,3 +1414,60 @@ button, input, select, textarea {
         gap: 24px;
     }
 }
+
+/* Accordion Toggle Styles (Mobile-Only) */
+.accordion-toggle-container {
+    display: none; /* Hidden on desktop/tablet */
+}
+
+@media (max-width: 767px) {
+    /* Hide items after the 4th child when collapsed */
+    .candid-gallery-grid.collapsed .gallery-item-candid:nth-child(n+5),
+    .menus-grid.collapsed .menu-card:nth-child(n+5) {
+        display: none;
+    }
+    
+    .accordion-toggle-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 24px;
+    }
+    
+    .btn-accordion {
+        background-color: transparent;
+        border: 1px solid var(--color-espresso);
+        color: var(--color-espresso);
+        padding: 10px 28px;
+        font-family: var(--font-sans);
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        transition: var(--transition-smooth);
+        border-radius: var(--border-radius);
+        cursor: pointer;
+    }
+    
+    .btn-accordion:hover,
+    .btn-accordion:active {
+        background-color: var(--color-espresso);
+        color: var(--color-white);
+    }
+    
+    /* Expand Animation */
+    @keyframes fadeInAccordion {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .candid-gallery-grid:not(.collapsed) .gallery-item-candid:nth-child(n+5),
+    .menus-grid:not(.collapsed) .menu-card:nth-child(n+5) {
+        animation: fadeInAccordion 0.4s ease forwards;
+    }
+}

@@ -293,4 +293,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
     }
+
+    // --- 8. MOBILE ACCORDION GALLERY TOGGLES ---
+    const setupAccordionToggle = (btnId, gridId) => {
+        const btn = document.getElementById(btnId);
+        const grid = document.getElementById(gridId);
+
+        if (btn && grid) {
+            btn.addEventListener('click', () => {
+                const isCollapsed = grid.classList.contains('collapsed');
+                if (isCollapsed) {
+                    grid.classList.remove('collapsed');
+                    btn.textContent = 'Show Less';
+                    btn.setAttribute('aria-expanded', 'true');
+                } else {
+                    grid.classList.add('collapsed');
+                    btn.textContent = 'Show More';
+                    btn.setAttribute('aria-expanded', 'false');
+                    
+                    // Smooth scroll back to grid top to keep context
+                    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+    };
+
+    setupAccordionToggle('toggle-table-btn', 'candid-gallery-grid');
+    setupAccordionToggle('toggle-menus-btn', 'menus-grid');
 });
