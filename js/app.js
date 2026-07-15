@@ -240,4 +240,57 @@ document.addEventListener('DOMContentLoaded', () => {
             window.closeLightbox();
         }
     });
+
+    // --- 7. DYNAMIC IMAGES & MANIFEST LOADER ---
+    const candidGrid = document.getElementById('candid-gallery-grid');
+    const menusGrid = document.getElementById('menus-grid');
+
+    if (candidGrid || menusGrid) {
+        fetch('assets/manifest.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch manifest.json');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate Candid Gallery Grid
+                if (candidGrid && data.table) {
+                    candidGrid.innerHTML = data.table.map((src, idx) => `
+                        <div class="gallery-item-candid" onclick="openLightbox('${src}')">
+                            <div class="candid-img-wrapper">
+                                <img src="${src}" alt="Chef Casey At the Table Candid Shot ${idx + 1}" loading="lazy">
+                                <div class="candid-overlay-hover">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+                // Populate Custom Menus Grid
+                if (menusGrid && data.menus) {
+                    menusGrid.innerHTML = data.menus.map((src, idx) => `
+                        <div class="menu-card" onclick="openLightbox('${src}')">
+                            <div class="menu-card-image">
+                                <img src="${src}" alt="Custom Sample Menu ${idx + 1}" loading="lazy">
+                                <div class="menu-card-overlay">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                                    <span>Enlarge Menu</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            })
+            .catch(err => {
+                console.error('Error loading dynamic galleries:', err);
+                if (candidGrid) {
+                    candidGrid.innerHTML = '<p class="error-msg">Error loading candid photos. Please refresh or try again later.</p>';
+                }
+                if (menusGrid) {
+                    menusGrid.innerHTML = '<p class="error-msg">Error loading sample menus. Please refresh or try again later.</p>';
+                }
+            });
+    }
 });
