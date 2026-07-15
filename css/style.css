@@ -216,6 +216,29 @@ button, input, select, textarea {
 
 .logo {
     display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    transition: var(--transition-smooth);
+}
+
+@media (min-width: 768px) {
+    .logo-icon {
+        height: 48px;
+    }
+}
+
+.logo:hover .logo-icon {
+    transform: scale(1.05) rotate(2deg);
+}
+
+.logo-text-group {
+    display: flex;
     flex-direction: column;
 }
 
